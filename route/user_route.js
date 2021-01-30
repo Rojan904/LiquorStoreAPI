@@ -7,6 +7,8 @@ const jwt=require('jsonwebtoken')   //for token npm i jsonwebtoken --save
 // var validator = require("email-validator");
 // validator.validate("test@email.com");
 
+const auth = require('../middleware/authenticate')
+
 router.post('/registerUser',[
     check('firstName',"First name is required!").not().isEmpty(),  //empty checking
     check('email',"Invalid Email Address!").isEmail(),     //email check
@@ -43,7 +45,7 @@ router.post('/registerUser',[
 })
 
 //login system
-router.get('/user/login',function(req,res){
+router.get('/user/login', auth.checkUser,function(req,res){
     const userName=req.body.userName
     const password=req.body.password   //user provided password
     //we need to find if user exists
@@ -67,7 +69,9 @@ router.get('/user/login',function(req,res){
 
         })
     })
-    .catch()  
+    .catch(function(err){
+        res.status(500).json({message:err})
+    })  
 })
 router.delete('/deleteUser/:id',function(req,res){
     const id=req.params.id    //params.id vnya url bata aauni, same to upper
