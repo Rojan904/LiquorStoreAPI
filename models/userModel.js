@@ -33,6 +33,11 @@ const user=mongoose.model('User',{
         type:String,
         unique:true,
         required:true 
+    },
+    userType:{
+        type:String,
+        enum:['Admin','Customer'],
+        default:'Customer'
     }
     
 })

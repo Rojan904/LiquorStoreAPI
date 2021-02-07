@@ -1,6 +1,6 @@
 const express=require('express')
 const router=express.Router()
-const user=require('../models/user_model')
+const user=require('../models/userModel')
 const {check,validationResult}=require('express-validator') //for validation npm i express-validator --save
 const bcryptjs=require('bcryptjs')   //for encryption, done after validation
 const jwt=require('jsonwebtoken')   //for token npm i jsonwebtoken --save
@@ -9,7 +9,7 @@ const jwt=require('jsonwebtoken')   //for token npm i jsonwebtoken --save
 
 const auth = require('../middleware/authenticate')
 
-router.post('/registerUser',[
+router.post('/user/register',[
     check('firstName',"First name is required!").not().isEmpty(),  //empty checking
     check('email',"Invalid Email Address!").isEmail(),     //email check
     check('password',"Password is required!").not().isEmpty(),
@@ -45,7 +45,7 @@ router.post('/registerUser',[
 })
 
 //login system
-router.get('/user/login', auth.checkUser,function(req,res){
+router.post('/user/login',function(req,res){
     const userName=req.body.userName
     const password=req.body.password   //user provided password
     //we need to find if user exists
@@ -73,14 +73,14 @@ router.get('/user/login', auth.checkUser,function(req,res){
         res.status(500).json({message:err})
     })  
 })
-router.delete('/deleteUser/:id',function(req,res){
+router.delete('/user/delete/:id',function(req,res){
     const id=req.params.id    //params.id vnya url bata aauni, same to upper
     user.deleteOne({_id:id}).then(function(){
         console.log("deleted")
     })
 })
 
-router.put('/updateUser/:id',function(req,res){
+router.put('/user/update/:id',function(req,res){
     const uid=req.params.id;
     const uName=req.body.userName
     user.updateOne({_id:uid,userName:uName}).then(function(){
