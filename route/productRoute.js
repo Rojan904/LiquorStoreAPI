@@ -5,8 +5,11 @@ const authenticate=require('../middleware/authenticate')   //providing path for 
 const imageUpload=require('../middleware/imageUpload')
 
 //for inserting liquor items
-router.post('/product/insert',imageUpload.single('productImage'),function(req,file,res){
-    console.log(req.file)
+router.post('/product/insert',imageUpload.single('productImage'),function(req,res){
+    // console.log(req.file)
+    if(req.file == undefined){
+        return res.status(400).json({message : "Only image files are allowed."})
+    }
     const productName=req.body.productName
     const productType=req.body.productType
     const productPrice=req.body.productPrice
