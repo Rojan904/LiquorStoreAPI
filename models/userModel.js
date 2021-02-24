@@ -3,36 +3,37 @@ const mongoose=require('mongoose')
 const user=mongoose.model('User',{
     firstName:{
         type:String,
-        required:true 
+        required:[true,'Enter your first name.'] 
     },
     lastName:{
         type:String,
-        required:true,
+        required:[true,'Enter your last name.'] 
       
     },
 
     dob:{
-        type:Date,
-        required:true 
+        type:String,
+        required:true,
+        
      },
-    userName:{
+    username:{
         type:String,
         unique:true,
-        required:true,
+        required:[true,'Enter your username.'],
+        trim:true
         
     },
     email:{
         type:String,
         unique:true,
-        required:true,
+        required:[true,'Please enter valid email.'],
         lowercase:true,
         uppercase:true
         
     },
     password:{
         type:String,
-        unique:true,
-        required:true 
+        required:true
     },
     userType:{
         type:String,
