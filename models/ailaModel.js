@@ -1,22 +1,25 @@
 const mongoose=require('mongoose')
 
-const product=mongoose.model('Product',{
-    productName:{
+const aila=mongoose.model('Aila',{
+    ailaImage:{
         type:String,
         required:true
     },
-    productType:{
-        type:String,
-        required:true
-    },
-    productPrice:{
+    ailaPrice:{
         type:Number,
         required:true
     },
-    productImage:{
+    ailaMl:{
+        type:Number,
+        required:true
+    },
+    ailaName:{
         type:String,
         required:true
-    }
-
+    },
+    ailaType:{
+        type:String,
+        required:true
+    },
 })
-module.exports=product
+module.exports=aila

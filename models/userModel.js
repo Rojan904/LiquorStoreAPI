@@ -13,7 +13,7 @@ const user=mongoose.model('User',{
 
     dob:{
         type:String,
-        required:true,
+        // required:true,
         
      },
     username:{
