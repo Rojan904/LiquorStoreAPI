@@ -43,7 +43,9 @@ router.post('/register',[
    
     }
     else{
+
         res.status(400).json(errors.array())   //if there is error send errors
+        console.log(errors)
     }
    
 })
