@@ -13,6 +13,6 @@ const cartRoute=require('./route/cartRoute')
 app.use(user_route)
 app.use(ailaRoute)
 app.use(cartRoute)
-app.use('/images', express.static(path.join(__dirname, 'images')))
-
+// app.use('/images', express.static(path.join(__dirname, 'images')))
+app.use(express.static('images'))
 app.listen(90)
