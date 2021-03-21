@@ -1,25 +1,24 @@
 const express=require('express')
 const router=express.Router()
-const aila=require('../models/ailaModel')
+const beer=require('../models/beerModel')
 const authenticate=require('../middleware/authenticate')   //providing path for authenticate.js
 const imageUpload=require('../middleware/imageUpload')
-const { count } = require('../models/ailaModel')
 
 //for inserting liquor items
-router.post('/aila/insert',imageUpload.single('ailaImage'),function(req,res){
+router.post('/beer/insert',imageUpload.single('beerImage'),function(req,res){
     // console.log(req.file)
     if(req.file == undefined){
         return res.status(400).json({message : "Only image files are allowed."})
     }
-    const ailaName=req.body.ailaName
-    const ailaType=req.body.ailaType
-    const ailaPrice=req.body.ailaPrice
-    const ailaMl=req.body.ailaMl
+    const beerName=req.body.beerName
+    const beerType=req.body.beerType
+    const beerPrice=req.body.beerPrice
+    const beerMl=req.body.beerMl
     // const ailaImage=req.body.productImage
 
-    const ailaData=new aila({
-        ailaImage:req.file.path,
-        ailaPrice:ailaPrice,
+    const beerData=new beer({
+        beerImage:req.file.path,
+        ailaPrice:beerPrice,
         ailaMl:ailaMl,
         ailaName:ailaName,
         ailaType:ailaType})
@@ -63,11 +62,9 @@ router.delete('/aila/delete/:ailaId',function(req,res){
 
 //Fetch all data from db
 router.get('/aila/all',function(req,res){
-    aila.find({ailaType:"Whisky"}).limit(2).then(function(info){
-        
-        
+    aila.find().then(function(info){
         res.status(200).json({
-           
+
             data:info
         })
     }).catch(function(err){

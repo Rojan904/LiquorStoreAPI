@@ -10,17 +10,14 @@ const cart=mongoose.model('Cart',{
         required:true
     },
     ailaMl:{
-        type:Number,
+        type:String,
         required:true
     },
     ailaName:{
         type:String,
         required:true
     },
-    ailaType:{
-        type:String,
-        required:true
-    },
+   
     ailaQty:{
         type:Number,
         required:true
