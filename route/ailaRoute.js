@@ -75,6 +75,28 @@ router.get('/aila/all',function(req,res){
     })
 })
 
+router.get('/beer',function(req,res){
+    aila.find({ailaType:"Beer"}).limit(4).then(function(info){
+        res.status(200).json({   
+            data:info
+        })
+    }).catch(function(err){
+        res.status(500).json({error:err})
+    })
+})
+
+router.get('/beer/all',function(req,res){
+    aila.find({ailaType:"Beer"}).then(function(info){
+        res.status(200).json({
+           
+            data:info
+        })
+    }).catch(function(err){
+        res.status(500).json({error:err})
+    })
+})
+
+
 router.get('/aila/one/:id',function(req,res){
     const id=req.params.id
     aila.findOne({_id:id})
