@@ -7,7 +7,7 @@ const { count } = require('../models/ailaModel')
 
 //for inserting liquor items
 router.post('/aila/insert',imageUpload.single('ailaImage'),function(req,res){
-    // console.log(req.file)
+    console.log(req.file)
     if(req.file == undefined){
         return res.status(400).json({message : "Only image files are allowed."})
     }
@@ -63,7 +63,7 @@ router.delete('/aila/delete/:ailaId',function(req,res){
 
 //Fetch all data from db
 router.get('/aila/all',function(req,res){
-    aila.find({ailaType:"Whisky"}).limit(2).then(function(info){
+    aila.find().then(function(info){
         
         
         res.status(200).json({
