@@ -24,9 +24,10 @@ router.post('/register',[
     const userName=req.body.username   //body.userName vaneko form bata aauni aile chei postman ko
     const email=req.body.email
     const password=req.body.password
+    const userType=req.body.userType
 
     bcryptjs.hash(password,10,function(err,hash){   //hash varifies that a file/data hasnot altered.
-        const u1=new user({firstName:firstName,lastName:lastName,dob:dob,username:userName,email:email,password:hash}) //first ko userName vnya database ko second ko chei mathi variable
+        const u1=new user({firstName:firstName,lastName:lastName,dob:dob,username:userName,email:email,password:hash,userType:userType}) //first ko userName vnya database ko second ko chei mathi variable
         u1.save()
         .then(function(result){ 
             res.status(201).json({

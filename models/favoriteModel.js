@@ -21,4 +21,4 @@ const favorite=mongoose.model('Favorite',{
         required:true
     },
 })
-module.exports=aila
+module.exports=favorite
