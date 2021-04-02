@@ -33,15 +33,15 @@ router.post('/aila/insert',imageUpload.single('ailaImage'),function(req,res){
 
 })
 
-router.put('/aila/update/:id',authenticate.checkUser,authenticate.checkAdmin,function(req,res){
-    const id=req.params.id
-    const ailaImage=req.body.ailaImage
+router.put('/aila/update',function(req,res){
+    const id=req.body.id
+    // const ailaImage=req.body.ailaImage
     const ailaPrice=req.body.ailaPrice
     const ailaMl=req.body.ailaMl
     const ailaName=req.body.ailaName
     const ailaType=req.body.ailaType
 
-    aila.updateOne({_id:id},{ailaName:ailaName,ailaType:ailaType,ailaPrice:ailaPrice,ailaMl:ailaMl,ailaImage:ailaImage})
+    aila.updateOne({_id:id},{ailaName:ailaName,ailaType:ailaType,ailaPrice:ailaPrice,ailaMl:ailaMl})
     .then(function(result){
         res.status(200).json({message:"Aila updated successfully!"})
     })
