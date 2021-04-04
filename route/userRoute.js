@@ -72,7 +72,8 @@ router.post('/user/login',function(req,res){
                 success:true,
                 message:"Authorization success",
                 token:token,
-                userType:userData.userType
+                userType:userData.userType,
+                data:userData
             })
             
 

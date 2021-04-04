@@ -3,7 +3,7 @@ const mongoose=require('mongoose')
 const cart=mongoose.model('Cart',{
     ailaImage:{
         type:String,
-        required:true
+        
     },
     ailaPrice:{
         type:Number,
@@ -20,7 +20,7 @@ const cart=mongoose.model('Cart',{
    
     ailaQty:{
         type:Number,
-        required:true
+       
     }
 })
 module.exports=cart
