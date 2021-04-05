@@ -44,9 +44,9 @@ router.post('/add/cart2/:id',auth.checkUser,auth.checkCustomer,function(req,res)
     aila.findOne({_id:id})
     .then(function(data){
         const price=data.ailaPrice*ailaQty
-
+        
         const cartData=new cart({
-            ailaId:id,userId:userId,ailaQty:ailaQty
+            ailaId:id,userId:userId,ailaQty:ailaQty,ailaPrice:price
            })
            cartData.save().then(function(result){
             res.status(201).json({success:true,message:"Added to Cart Successfully."})
@@ -86,4 +86,17 @@ router.get('/cart/all',auth.checkUser,auth.checkCustomer,function(req,res){
         res.status(500).json({error:err})
     })
 })
+
+router.delete('/cart/delete/:id',function(req,res){
+    const id=req.params.id
+    cart.deleteOne({_id:id})
+    .then(function(result){
+        res.status(200).json({message:"Deleted"})
+    })
+    .catch(function(e){
+        res.status(500).json({error:e})
+    })
+})
+
+
 module.exports=router

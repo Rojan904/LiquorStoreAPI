@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
-const aila=require('./ailaModel')
-const cart=mongoose.model('Cart',{
+const cart=require('./cartModel')
+const checkout=mongoose.model('Checkout',{
     ailaId:{
         type:String,
         ref:aila
