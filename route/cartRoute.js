@@ -1,6 +1,8 @@
 const express=require('express')
 const router=express.Router()
+const aila=require('../models/ailaModel')
 const cart=require('../models/cartModel')
+const auth=require('../middleware/authenticate')
 const imageUpload=require('../middleware/imageUpload')
 
 router.post('/add/cart',imageUpload.single('ailaImage'),function(req,res){
@@ -14,6 +16,7 @@ router.post('/add/cart',imageUpload.single('ailaImage'),function(req,res){
     const ailaMl=req.body.ailaMl
     const ailaQty=req.body.ailaQty
 
+    
     const cartData=new cart({
         ailaImage:req.file.path,
         ailaPrice:ailaPrice,
@@ -32,8 +35,49 @@ router.post('/add/cart',imageUpload.single('ailaImage'),function(req,res){
     
 })
 
-router.get('/cart/all',function(req,res){
-    cart.find().then(function(info){
+
+router.post('/add/cart2/:id',auth.checkUser,auth.checkCustomer,function(req,res){
+    const id=req.params.id
+//    const ailaId=req.params.ailaId
+   const userId=req.data._id
+    const ailaQty=req.body.ailaQty
+    aila.findOne({_id:id})
+    .then(function(data){
+        const price=data.ailaPrice*ailaQty
+
+        const cartData=new cart({
+            ailaId:id,userId:userId,ailaQty:ailaQty
+           })
+           cartData.save().then(function(result){
+            res.status(201).json({success:true,message:"Added to Cart Successfully."})
+        })
+        
+        
+    })
+    .catch(function(e){
+        res.status(500).json({message:e})
+        console.log(e)
+    })
+    // const cartData=new cart({
+    //      ailaId:id,
+    //     userId:userId,
+        
+    //     // ailaType:ailaType,
+    //     ailaQty:ailaQty})
+    
+    // cartData.save().then(function(result){
+    //     res.status(201).json({success:true,message:"Added to Cart Successfully."})
+    // })
+    // .catch(function(e){
+    //     res.status(500).json({message:e})
+    //     console.log(e)
+    // })
+
+    
+    
+})
+router.get('/cart/all',auth.checkUser,auth.checkCustomer,function(req,res){
+    cart.find({"userId":req.data._id}).populate({"path":"ailaId"}).then(function(info){
         res.status(200).json({
 
             data:info

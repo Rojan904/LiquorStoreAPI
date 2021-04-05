@@ -1,26 +1,15 @@
 const mongoose=require('mongoose')
-
+const aila=require('./ailaModel')
 const cart=mongoose.model('Cart',{
-    ailaImage:{
+    ailaId:{
         type:String,
-        
-    },
-    ailaPrice:{
-        type:Number,
-        required:true
-    },
-    ailaMl:{
-        type:String,
-        required:true
-    },
-    ailaName:{
-        type:String,
-        required:true
-    },
-   
+        ref:aila
+    } ,  
+    userId:
+    {type:String},
+    
     ailaQty:{
         type:Number,
-       
     }
 })
 module.exports=cart
