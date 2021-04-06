@@ -46,7 +46,7 @@ router.post('/add/cart2/:id',auth.checkUser,auth.checkCustomer,function(req,res)
         const price=data.ailaPrice*ailaQty
         
         const cartData=new cart({
-            ailaId:id,userId:userId,ailaQty:ailaQty,ailaPrice:price
+            ailaId:id,userId:userId,ailaQty:ailaQty
            })
            cartData.save().then(function(result){
             res.status(201).json({success:true,message:"Added to Cart Successfully."})
@@ -57,24 +57,7 @@ router.post('/add/cart2/:id',auth.checkUser,auth.checkCustomer,function(req,res)
     .catch(function(e){
         res.status(500).json({message:e})
         console.log(e)
-    })
-    // const cartData=new cart({
-    //      ailaId:id,
-    //     userId:userId,
-        
-    //     // ailaType:ailaType,
-    //     ailaQty:ailaQty})
-    
-    // cartData.save().then(function(result){
-    //     res.status(201).json({success:true,message:"Added to Cart Successfully."})
-    // })
-    // .catch(function(e){
-    //     res.status(500).json({message:e})
-    //     console.log(e)
-    // })
-
-    
-    
+    }  
 })
 router.get('/cart/all',auth.checkUser,auth.checkCustomer,function(req,res){
     cart.find({"userId":req.data._id}).populate({"path":"ailaId"}).then(function(info){
@@ -86,7 +69,17 @@ router.get('/cart/all',auth.checkUser,auth.checkCustomer,function(req,res){
         res.status(500).json({error:err})
     })
 })
+    
 
+router.get('/cart/one/:id',function(req,res){
+    const id=req.params.id
+    cart.findOne({_id:id})
+    .then(function(info){
+        res.status(200).json(info)
+    }).catch(function(err){
+        res.status(500).json({error:err})
+    })
+})
 router.delete('/cart/delete/:id',function(req,res){
     const id=req.params.id
     cart.deleteOne({_id:id})
@@ -98,5 +91,22 @@ router.delete('/cart/delete/:id',function(req,res){
     })
 })
 
+router.put('/cart/update/:id',function(req,res){
+    const id=req.params.id
+    const ailaQty=req.body.ailaQty
+    const ailaPrice=req.body.ailaPrice
+    cart.updateOne({_id:id},{
+        $set:{
+            ailaQty:ailaQty,
+            ailaPrice:ailaPrice
+        }
+    })
+    .then(function(result){
+        res.status(200).json({success:true,message:"Updated"})
+    })
+    .catch(function(e){
+        res.status(500).json({error:e})
+    })
+})
 
 module.exports=router
