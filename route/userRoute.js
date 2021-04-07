@@ -73,7 +73,8 @@ router.post('/user/login',function(req,res){
                 message:"Authorization success",
                 token:token,
                 userType:userData.userType,
-                data:userData
+                data:userData,
+                id:userData._id
             })
             
 
@@ -89,13 +90,40 @@ router.delete('/user/delete/:id',function(req,res){
         console.log("deleted")
     })
 })
+router.get('/user/single/:id',function(req,res){
+    const id=req.params.id    //params.id vnya url bata aauni, same to upper
+    user.findOne({_id:id})
+    .then(function(info){
+        res.status(200).json(info)
+    })
+    .catch(function(err){
+        res.status(500).json({error:err})
+    })
+})
 
 router.put('/user/update/:id',function(req,res){
     const uid=req.params.id;
-    const uName=req.body.userName
-    user.updateOne({_id:uid,userName:uName}).then(function(){
-        console.log("updated")
+    const firstName=req.body.firstName
+    const lastName=req.body.lastName
+    const dob=req.body.dob
+    const username=req.body.username   //body.userName vaneko form bata aauni aile chei postman ko
+    const email=req.body.email
+    const password=req.body.password
+    
+
+    user.updateOne({_id:uid},{
+        $set:{
+            firstName:firstName,lastName:lastName,dob:dob,username:username,email:email,password:password
+        }
+    }
+      ).then(function(){
+        console.log("User updated successfully")
+        res.status(200).json({success:true,message:"Profile updated successfully"})
+    })
+    .catch(function(err){
+        res.status(500).json({error:err})
     })
 })
+
 
 module.exports=router   
