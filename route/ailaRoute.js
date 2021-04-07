@@ -50,6 +50,19 @@ router.put('/aila/update',function(req,res){
     })
 })
 
+router.put('/aila/updateImage/:id', imageUpload.single('ailaImage'), function (req, res) {
+    const id = req.params.id
+    const ailaImage = req.file.path;
+    aila.updateOne({ _id: id }, {
+        ailaImage: ailaImage
+    }).then(function (result) {
+        res.status(200).json({ staus: "true", message: "Image updated" })
+    })
+        .catch(function (e) {
+            res.status(500).json(e)
+        })
+})
+
 router.delete('/aila/delete/:ailaId',function(req,res){
     const pid=req.params.ailaId
     aila.deleteOne({_id:pid})
