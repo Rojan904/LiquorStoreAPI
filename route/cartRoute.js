@@ -57,7 +57,10 @@ router.post('/add/cart2/:id',auth.checkUser,auth.checkCustomer,function(req,res)
     .catch(function(e){
         res.status(500).json({message:e})
         console.log(e)
-    }  
+    })
+
+    
+    
 })
 router.get('/cart/all',auth.checkUser,auth.checkCustomer,function(req,res){
     cart.find({"userId":req.data._id}).populate({"path":"ailaId"}).then(function(info){
