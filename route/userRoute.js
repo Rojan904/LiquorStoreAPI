@@ -73,8 +73,8 @@ router.post('/user/login',function(req,res){
                 message:"Authorization success",
                 token:token,
                 userType:userData.userType,
-                data:userData,
-                id:userData._id
+                data:[userData],
+                userId:userData._id
             })
             
 
@@ -94,7 +94,7 @@ router.get('/user/single/:id',function(req,res){
     const id=req.params.id    //params.id vnya url bata aauni, same to upper
     user.findOne({_id:id})
     .then(function(info){
-        res.status(200).json(info)
+        res.status(200).json({data:info})
     })
     .catch(function(err){
         res.status(500).json({error:err})

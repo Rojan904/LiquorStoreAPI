@@ -5,6 +5,7 @@ const cart=require('../models/cartModel')
 const auth=require('../middleware/authenticate')
 const imageUpload=require('../middleware/imageUpload')
 
+
 router.post('/add/cart',imageUpload.single('ailaImage'),function(req,res){
   
     if(req.file == undefined){
@@ -64,10 +65,19 @@ router.post('/add/cart2/:id',auth.checkUser,auth.checkCustomer,function(req,res)
 })
 router.get('/cart/all',auth.checkUser,auth.checkCustomer,function(req,res){
     cart.find({"userId":req.data._id}).populate({"path":"ailaId"}).then(function(info){
-        res.status(200).json({
+        // var parse=JSON.parse(JSON.stringify(info))
 
+        // console.log(parse)
+
+        info.forEach(element => {
+           const data=element.ailaId.ailaName
+           
+        });
+        res.status(200).json({
             data:info
-        })
+           
+        }) 
+       
     }).catch(function(err){
         res.status(500).json({error:err})
     })
