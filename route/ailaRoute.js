@@ -100,6 +100,19 @@ router.get('/aila/all:ailaType',function(req,res){
         res.status(500).json({error:err})
     })
 })
+
+router.get('/aila/type/:ailaType',function(req,res){
+    const ailaType=req.params.ailaType
+    aila.find({ailaType:ailaType}).then(function(info){
+        
+        res.status(200).json({
+           
+            data:info
+        })
+    }).catch(function(err){
+        res.status(500).json({error:err})
+    })
+})
 router.get('/beer',function(req,res){
     aila.find({ailaType:"Beer"}).limit(4).then(function(info){
         res.status(200).json({   

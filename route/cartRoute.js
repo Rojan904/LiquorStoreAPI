@@ -80,6 +80,7 @@ router.get('/cart/all',auth.checkUser,auth.checkCustomer,function(req,res){
        
     }).catch(function(err){
         res.status(500).json({error:err})
+        console.log(err)
     })
 })
     
@@ -97,7 +98,7 @@ router.delete('/cart/delete/:id',function(req,res){
     const id=req.params.id
     cart.deleteOne({_id:id})
     .then(function(result){
-        res.status(200).json({message:"Deleted"})
+        res.status(200).json({success:true,message:"Deleted"})
     })
     .catch(function(e){
         res.status(500).json({error:e})

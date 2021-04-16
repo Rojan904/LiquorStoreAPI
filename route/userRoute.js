@@ -96,7 +96,7 @@ router.get('/user/single/:id',function(req,res){
     .then(function(info){
         res.status(200).json({data:info})
     })
-    .catch(function(err){
+    .catch(function(err){   
         res.status(500).json({error:err})
     })
 })
@@ -113,7 +113,7 @@ router.put('/user/update/:id',function(req,res){
 
     user.updateOne({_id:uid},{
         $set:{
-            firstName:firstName,lastName:lastName,dob:dob,username:username,email:email,password:password
+            firstName:firstName,lastName:lastName,dob:dob,username:username,email:email
         }
     }
       ).then(function(){
