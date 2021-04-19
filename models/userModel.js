@@ -39,7 +39,8 @@ const user=mongoose.model('User',{
         type:String,
         enum:['Admin','Customer'],
         default:'Customer'
-    }
+    },
+    userImage:{type:String,default:"images\\161857611628420210416_181334.jpg"}
     
 })
 
