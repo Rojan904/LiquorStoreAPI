@@ -1,4 +1,6 @@
 const Aila = require('../models/ailaModel');
+const User=require('../models/userModel')
+const Cart=require('../models/cartModel')
 const mongoose = require('mongoose');
 
 const url = 'mongodb://localhost:27017/AilaDBTest';
@@ -12,7 +14,9 @@ afterAll(async () => {
  await mongoose.connection.close();
 });
  
-   describe('Testing if product is being inserted', () => {
+   describe('Testing for Database', () => {
+
+   //1.Product add test
     it('addAilaTest', () => {
     const aila = {
     'ailaName': 'Golden Oak',
@@ -27,10 +31,13 @@ afterAll(async () => {
     });
     });
    
+     //2.Product delete test
     it('Testing if product is being deleted', async () => {
     const status = await Aila.deleteOne({_id:Object('603a134c0b41dd3d5c96b27b')});
     expect(status.ok).toBe(1);
    });
+
+   //3.Product update test
    it('Testing if product is being updated', async () => {
     return Aila.findOneAndUpdate({_id :Object('606d54d07e63b94240ab5a40')}, 
    {$set : {ailaName:'Khukuri Rum'}})
@@ -39,6 +46,57 @@ afterAll(async () => {
     })
     
    });
+   //4.Test registration
+   it('Test to register user',async()=>{
+      const user={
+         "firstName":"Gautam",
+         "lastName":"Stha",
+         "dob":"2-2-2005",
+         "username":"gautam",
+         "email":"gautam@gmail.com",
+         "password":"123"
+      }
+      return User.create(user)
+      .then((userData)=>{
+         expect(userData.username).toEqual("gautam")
+      })
+   })
+
+   //5.Product add test
+    it('addCartTest', async() => {
+    const cart = {
+    'ailaId': '606d5252d359114a08368f1c',
+    'userId': '607e8c6d1226e34cc8fe1b2f',
+    'ailaQty':'2',
+    
+    };
+    
+    return Cart.create(cart)
+    .then((cartData) => {
+    expect(cartData.ailaQty).toBe(2);
+    });
+    });
+   
+     //6.Cart delete test
+     it('Testing if cart is being deleted', async () => {
+      const status = await Aila.find();
+      expect(status.ok).toBe(15);
+     });
+
+     it('Testing for get product',async()=>{
+
+     })
+  
+     //7.Product update test
+     it('Testing if product is being updated', async () => {
+      return Cart.findOneAndUpdate({_id :Object('607e8e31ca33cd2c98a51f11')}, 
+     {$set : {ailaQty:'4'}})
+      .then((cartData)=>{
+      expect(cartData.ailaQty).toBe(2)
+      })
+      
+     });
+
     
    })
    
