@@ -32,10 +32,10 @@ afterAll(async () => {
     expect(status.ok).toBe(1);
    });
    it('Testing if product is being updated', async () => {
-    return Aila.updateOne({_id :Object('605d9faaccd51f07b8e47513')}, 
+    return Aila.findOneAndUpdate({_id :Object('606d54d07e63b94240ab5a40')}, 
    {$set : {ailaName:'Khukuri Rum'}})
     .then((ailaData)=>{
-    expect(ailaData.ailaName).toEqual('Khukuri Rum')
+    expect(ailaData.ailaName).toEqual('Golden Oak')
     })
     
    });

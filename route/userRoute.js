@@ -94,7 +94,7 @@ router.put('/user/updateImage/:id', imageUpload.single('userImage'), function (r
     user.updateOne({ _id: id }, {
         userImage: userImage
     }).then(function (result) {
-        res.status(200).json({ success: "true", message: "Image updated" })
+        res.status(200).json({ success: "true", message: "Image updated",data:result })
     })
         .catch(function (e) {
             res.status(600).json(e)
@@ -134,9 +134,9 @@ router.put('/user/update/:id',function(req,res){
             firstName:firstName,lastName:lastName,dob:dob,username:username,email:email
         }
     }
-      ).then(function(){
+      ).then(function(result){
         console.log("User updated successfully")
-        res.status(200).json({success:true,message:"Profile updated successfully"})
+        res.status(200).json({success:true,message:"Profile updated successfully",data:result})
     })
     .catch(function(err){
         res.status(500).json({error:err})
