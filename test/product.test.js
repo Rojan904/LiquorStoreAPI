@@ -39,7 +39,7 @@ afterAll(async () => {
 
    //3.Product update test
    it('Testing if product is being updated', async () => {
-    return Aila.findOneAndUpdate({_id :Object('606d54d07e63b94240ab5a40')}, 
+    return Aila.findOneAndUpdate({_id :Object('606d5252d359114a08368f1c')}, 
    {$set : {ailaName:'Khukuri Rum'}})
     .then((ailaData)=>{
     expect(ailaData.ailaName).toEqual('Golden Oak')
@@ -52,13 +52,13 @@ afterAll(async () => {
          "firstName":"Gautam",
          "lastName":"Stha",
          "dob":"2-2-2005",
-         "username":"gautam",
-         "email":"gautam@gmail.com",
-         "password":"123"
+         "username":"mango",
+         "email":"mango@gmail.com",
+         "password":"111"
       }
       return User.create(user)
       .then((userData)=>{
-         expect(userData.username).toEqual("gautam")
+         expect(userData.username).toEqual("mango")
       })
    })
 
@@ -79,18 +79,16 @@ afterAll(async () => {
    
      //6.Cart delete test
      it('Testing if cart is being deleted', async () => {
-      const status = await Aila.find();
-      expect(status.ok).toBe(15);
+      const status = await Cart.deleteOne({_id:Object('607e8e31ca33cd2c98a51f11')});
+      expect(status.ok).toBe(1);
      });
 
-     it('Testing for get product',async()=>{
-
-     })
+   
   
      //7.Product update test
      it('Testing if product is being updated', async () => {
-      return Cart.findOneAndUpdate({_id :Object('607e8e31ca33cd2c98a51f11')}, 
-     {$set : {ailaQty:'4'}})
+      return Cart.findOneAndUpdate({_id :Object('607e8ebfbc1c9b49f45442df')}, 
+     {$set : {ailaQty:'3'}})
       .then((cartData)=>{
       expect(cartData.ailaQty).toBe(2)
       })

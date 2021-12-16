@@ -47,7 +47,7 @@ router.post('/add/cart2/:id',auth.checkUser,auth.checkCustomer,function(req,res)
         const price=data.ailaPrice*ailaQty
         
         const cartData=new cart({
-            ailaId:id,userId:userId,ailaQty:ailaQty
+            ailaId:id,userId:userId,ailaQty:ailaQty,ailaPrice:price
            })
            cartData.save().then(function(result){
             res.status(201).json({success:true,message:"Added to Cart Successfully."})
@@ -105,22 +105,23 @@ router.delete('/cart/delete/:id',function(req,res){
     })
 })
 
-router.put('/cart/update/:id',function(req,res){
+router.put('/cart/update/:id',auth.checkUser,auth.checkCustomer,function(req,res){
     const id=req.params.id
     const ailaQty=req.body.ailaQty
-    const ailaPrice=req.body.ailaPrice
-    cart.updateOne({_id:id},{
-        $set:{
-            ailaQty:ailaQty,
-            ailaPrice:ailaPrice
-        }
+    cart.find().then(function(data){
+        const price=1550*ailaQty
+            cart.updateOne({_id:id},{
+               
+                    ailaQty:ailaQty,ailaPrice:price
+                    
+                
+            }) .then(function(result){
+                res.status(200).json({success:true,message:"Updated"})
+            })
+            .catch(function(e){ 
+                res.status(500).json({error:e})
+            })
     })
-    .then(function(result){
-        res.status(200).json({success:true,message:"Updated"})
     })
-    .catch(function(e){
-        res.status(500).json({error:e})
-    })
-})
-
+   
 module.exports=router
